@@ -1,0 +1,27 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - apk add --update curl && rm -rf /var/cache/apk/*
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build --pull -t "registry.gitlab.com/devphoom/fastapi-test:main" .
+    - docker push "registry.gitlab.com/devphoom/fastapi-test:main"
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  script:
+    - curl --location --request POST 'https://portainer.devphoom-kup.com/api/webhooks/wer58b313-01eb-4d99-rgbf-011bfsdbf5db'
+  only:
+    - main

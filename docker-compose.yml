@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  api:
+    image: registry.gitlab.com/devphoom/fastapi-test:main
+    networks:
+      - traefik-public
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.fastapi-test-https.rule=Host(`api-fastapi-test.devphoom-kup.com`)
+        - traefik.http.routers.fastapi-test-https.entrypoints=https
+        - traefik.http.routers.fastapi-test-https.tls=true
+        - traefik.http.routers.fastapi-test-https.tls.certresolver=le
+        - traefik.http.services.fastapi-test-https.loadbalancer.server.port=8000
+
+networks:
+  traefik-public:
+    external: true
