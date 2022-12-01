@@ -11,3 +11,5 @@
 
 # URL ที่พี่สร้างเพื่อมาทดสอบ [URL](https://api-fastapi-test.devphoom-kup.com/docs#/)
 
+# ภาพตัวอย่างโครงสร้างของ code
+![alt text](https://minio-api.devphoom-kup.com/images/Screenshot%202022-12-01%20225158.jpg)
